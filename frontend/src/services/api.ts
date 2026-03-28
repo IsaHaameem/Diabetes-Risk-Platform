@@ -112,17 +112,53 @@ export const downloadReport = async (patientData: any, result: any) => {
   link.click();
 };
 export const batchPredict = async (file: File) => {
-  const formData = new FormData();
-  formData.append("file", file);
+  try {
+    console.log("1. Sending batch file to backend...");
 
-  const response = await apiClient.post("/batch-predict", formData, {
-    headers: {
-      "Content-Type": "multipart/form-data",
-    },
-    responseType: "blob", // important for file download
-  });
+    const formData = new FormData();
+    formData.append('file', file);
 
-  return response.data;
+    const response = await apiClient.post('/batch-predict', formData, {
+      headers: { 'Content-Type': 'multipart/form-data' },
+      responseType: 'blob'
+    });
+
+    console.log("2. Response received!", response);
+
+    // ✅ Handle empty response edge case
+    if (!response.data) {
+      throw new Error("Empty file received from server");
+    }
+
+    // ✅ Force CSV MIME type
+    const blob = new Blob([response.data], {
+      type: 'text/csv;charset=utf-8;'
+    });
+
+    const url = window.URL.createObjectURL(blob);
+
+    console.log("3. Triggering download...");
+
+    const link = document.createElement('a');
+    link.href = url;
+
+    // ✅ Better filename (clean + readable)
+    const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
+    link.download = `batch_predictions_${timestamp}.csv`;
+
+    document.body.appendChild(link);
+    link.click();
+
+    // ✅ Cleanup
+    document.body.removeChild(link);
+    window.URL.revokeObjectURL(url);
+
+    console.log("4. Download complete!");
+
+  } catch (error) {
+    console.error("❌ Batch Download Failed:", error);
+    throw error;
+  }
 };
 export const getPredictionHistory = async () => {
   const response = await apiClient.get('/history/');
