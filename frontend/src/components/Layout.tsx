@@ -14,30 +14,32 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
 
   return (
     <div className="min-h-screen flex flex-col">
-      <nav className="bg-primary text-white shadow-md">
+      <nav className="bg-white/80 backdrop-blur-md border-b border-slate-200 sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             <Link to={isAuthenticated ? "/dashboard" : "/"} className="flex items-center space-x-3 cursor-pointer">
               <Activity className="h-8 w-8 text-secondary" />
-              <span className="font-bold text-xl tracking-wide">DiabetesRisk AI</span>
+              <span className="font-bold text-xl tracking-wide text-slate-900">DiabetesRisk AI</span>
             </Link>
             
             <div className="flex items-center space-x-6">
               {isAuthenticated ? (
                 <>
-                  <Link to="/dashboard" className="text-sm font-medium text-gray-300 hover:text-white transition">Dashboard</Link>
-                  <Link to="/history" className="text-sm font-medium text-gray-300 hover:text-white transition">History</Link>
-                  <Link to="/analytics" className="text-sm font-medium text-gray-300 hover:text-white transition">Analytics</Link>
-                  <Link to="/models" className="text-sm font-medium text-gray-300 hover:text-white transition">Models</Link>
-                  <Link to="/batch" className="text-sm font-medium text-gray-300 hover:text-white transition">Batch Mode</Link>
-                  <button onClick={handleLogout} className="flex items-center text-sm font-medium text-red-400 hover:text-red-300 transition">
+                  <Link to="/dashboard" className="text-sm font-medium text-slate-600 hover:text-slate-900 transition">Dashboard</Link>
+                  <Link to="/history" className="text-sm font-medium text-slate-600 hover:text-slate-900 transition">History</Link>
+                  <Link to="/analytics" className="text-sm font-medium text-slate-600 hover:text-slate-900 transition">Analytics</Link>
+                  <Link to="/models" className="text-sm font-medium text-slate-600 hover:text-slate-900 transition">Models</Link>
+                  <Link to="/batch" className="text-sm font-medium text-slate-600 hover:text-slate-900 transition">Batch Mode</Link>
+                  <button onClick={handleLogout} className="flex items-center text-sm font-medium text-red-500 hover:text-red-600 transition">
                     <LogOut size={16} className="mr-1" /> Logout
                   </button>
                 </>
               ) : (
                 <>
-                  <Link to="/login" className="text-sm font-medium text-gray-300 hover:text-white transition">Login</Link>
-                  <Link to="/signup" className="text-sm font-medium bg-secondary px-4 py-2 rounded hover:bg-blue-500 transition text-white">Sign Up</Link>
+                  <Link to="/login" className="text-sm font-medium text-slate-600 hover:text-slate-900 transition">Login</Link>
+                  <Link to="/signup" className="text-sm font-medium bg-slate-900 text-white px-4 py-2 rounded-lg hover:bg-black transition shadow-sm">
+                    Sign Up
+                  </Link>
                 </>
               )}
             </div>
