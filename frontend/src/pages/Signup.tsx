@@ -15,7 +15,8 @@ export const Signup: React.FC = () => {
     setLoading(true);
     setError('');
     try {
-      await axios.post('http://localhost:8000/auth/signup', { email, password });
+      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+      await axios.post(`${apiUrl}/auth/signup`, { email, password });
       // Redirect to login on successful signup
       navigate('/login', { state: { message: 'Account created successfully. Please log in.' } });
     } catch (err: any) {

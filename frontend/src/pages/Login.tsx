@@ -18,7 +18,8 @@ export const Login: React.FC = () => {
     setError('');
     try {
       // Using standard axios here for the auth route to bypass any interceptor issues
-      const res = await axios.post('http://localhost:8000/auth/login', { email, password });
+      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+      const res = await axios.post(`${apiUrl}/auth/login`, { email, password });
       login(res.data.access_token);
       navigate('/dashboard');
     } catch (err: any) {
