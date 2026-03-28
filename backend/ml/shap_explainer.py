@@ -56,3 +56,22 @@ def get_shap_values(model, scaled_input):
             "Insulin": -0.82,
             "SkinThickness": -1.25
         }
+def generate_recommendations(patient_data: dict) -> list:
+    recs = []
+
+    if patient_data.get("Glucose", 0) > 140:
+        recs.append("High glucose levels detected. Consider an HbA1c test and consult a doctor.")
+
+    if patient_data.get("BMI", 0) > 30:
+        recs.append("BMI indicates obesity. Recommend improving diet and increasing physical activity.")
+
+    if patient_data.get("BloodPressure", 0) > 90:
+        recs.append("Elevated blood pressure detected. Monitor cardiovascular health regularly.")
+
+    if patient_data.get("Age", 0) > 45 and patient_data.get("BMI", 0) >= 25:
+        recs.append("Age and BMI combination increases diabetes risk.")
+
+    if not recs:
+        recs.append("Maintain a healthy lifestyle and continue regular checkups.")
+
+    return recs
